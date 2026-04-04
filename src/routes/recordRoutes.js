@@ -3,10 +3,21 @@ const router = express.Router();
 
 const recordController = require("../controllers/recordController");
 const authMiddleware = require("../middlewares/authMiddleware");
+const authorizeRoles = require("../middlewares/roleMiddleware");
 
 router.use(authMiddleware);
 
-router.get("/", recordController.getRecords);
-router.post("/", recordController.createRecord);
+// RBAC applied here
+router.get(
+    "/",
+    authorizeRoles("ADMIN", "ANALYST", "VIEWER"),
+    recordController.getRecords
+)
+router.post(
+    "/",
+    authorizeRoles("ADMIN"),
+    recordController.createRecord
+)
+
 
 module.exports = router;
