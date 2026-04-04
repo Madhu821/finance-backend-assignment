@@ -21,4 +21,34 @@ const createRecord = async (req, res) => {
     }
 };
 
-module.exports = { getRecords, createRecord};
+
+const updateRecord = async (req, res) => {
+    try {
+        const record = await recordService.updateRecord(
+            req.params.id,
+            req.body
+        );
+        res.json(record);
+    } catch (err){
+        res.status(400).json({
+            message: err.message,
+        });
+    }
+};
+
+
+const deleteRecord = async (req, res) => {
+    try {
+        await recordService.deleteRecord(req.params.id);
+
+        res.json({
+            message: "Record deleted Successfully",
+        });
+    }catch (err){
+        res.status(400).json({
+            message: err.message,
+        });
+    }
+};
+
+module.exports = { getRecords, createRecord, updateRecord, deleteRecord};

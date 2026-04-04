@@ -19,4 +19,29 @@ const createRecord = async (data, userId) => {
     });
 };
 
-module.exports = { getRecords, createRecord };
+
+const updateRecord = async (id, data) => {
+    return prisma.record.update({
+        where: {id: Number(id)},
+        data: {
+            amount: data.amount,
+            type: data.type,
+            category: data.category,
+            date: data.date ? new Date(data.date) : undefined,
+            notes: data.notes,
+        },
+    });
+};
+
+const deleteRecord = async(id) => {
+    return prisma.record.delete({
+        where: { id: Number(id)},
+    });
+};
+
+module.exports = {
+    getRecords,
+    createRecord,
+    updateRecord,
+    deleteRecord
+}

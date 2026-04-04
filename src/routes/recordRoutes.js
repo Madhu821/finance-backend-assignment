@@ -19,5 +19,16 @@ router.post(
     recordController.createRecord
 )
 
+router.put(
+    "/:id",
+    authorizeRoles("ADMIN"),
+    recordController.updateRecord
+)
+
+router.delete(
+    "/:id",
+    authorizeRoles("ADMIN"),
+    recordController.deleteRecord
+);
 
 module.exports = router;
