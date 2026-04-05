@@ -11,6 +11,21 @@ const getRecords = async (req, res) => {
 
 const createRecord = async (req, res) => {
     try {
+        const {amount, type, category, date} = req.body;
+
+        if (amount || amount<=0){
+            return res.status(400).json({ message: "Amount must be greater than 0"});
+        }
+
+        if (!["INCOME", "EXPENSE"].includes(type)){
+            return res.status(400).json({ message: "Invalid type"});
+        }
+
+        if (!category) {
+            return res.status(400).json({ message: "Category is required"});
+        }
+
+
         const record = await recordService.createRecord(
             req.body,
             req.user.id
