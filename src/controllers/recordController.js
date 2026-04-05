@@ -2,7 +2,7 @@ const recordService = require("../services/recordService");
 
 const getRecords = async (req, res) => {
     try {
-        const records = await recordService.getRecords();
+        const records = await recordService.getRecords(req.query);
         res.json(records);
     }catch (err) {
         res.status(400).json({message: err.message});

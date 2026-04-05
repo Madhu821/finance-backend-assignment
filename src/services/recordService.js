@@ -1,8 +1,29 @@
 const prisma = require("../config/prisma");
 
-const getRecords = async () => {
+const getRecords = async (filters) => {
+    const where = {};
+
+    if (filters.type){
+        where.type = filters.type;
+    }
+
+    if (filters.category){
+        where.category = filters.category;
+    }
+
+    if (filters.startDate || filters.endDate){
+        where.date = {};
+
+        if (filters.startDate){
+            where.date.gte = new Date(filters.startDate);
+        }
+        if (filters.endDate){
+            where.date.lte = new Date(filters.endDate);
+        }
+    }
     return prisma.record.findMany({
-        orderBy: {date: "desc"},
+        where,
+        orderBy: { date: "desc"},
     });
 };
 
