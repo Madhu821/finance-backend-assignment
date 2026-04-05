@@ -9,4 +9,7 @@ app.use("/auth", authRoutes);
 const recordRoutes = require("./routes/recordRoutes");
 app.use("/records", recordRoutes);
 
+const dashboardRoutes = require("./routes/dashboardRoutes");
+app.use("/dashboard", dashboardRoutes);
+
 module.exports = app;
